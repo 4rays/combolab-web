@@ -22,13 +22,11 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@cloudflare/workers-types": "^4.20250214.0",
     "@tanstack/react-router": "^1.106.0",
     "@tanstack/start": "^1.107.0",
     "drizzle-orm": "^0.39.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "unenv": "^1.10.0",
     "vinxi": "^0.5.3"
   }
 }
