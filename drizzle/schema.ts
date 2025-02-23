@@ -1,117 +1,107 @@
 import {
-  sqliteTable,
+  pgTable,
   text,
-  int,
+  integer,
+  jsonb,
   index,
   uniqueIndex,
-} from "drizzle-orm/sqlite-core";
+} from "drizzle-orm/pg-core";
 
-export const character = sqliteTable("character", {
-  id: int("id").notNull().primaryKey(),
+export const character = pgTable("character", {
+  id: integer("id").notNull().primaryKey(),
   name: text("name").notNull(),
   nameJa: text("name_ja").notNull(),
   slug: text("slug").notNull(),
   capcom_slug: text("capcom_slug"),
   description: text("description"),
   descriptionJa: text("description_ja"),
-  tags: text("tags", { mode: "json" }).$type<string[]>(),
-  tagsJa: text("tags_ja", { mode: "json" }).$type<string[]>(),
-  media: text("media", { mode: "json" }).$type<string[]>(),
-  artwork: text("artwork").$type<string>(),
+  tags: jsonb("tags"),
+  tagsJa: jsonb("tags_ja"),
+  media: jsonb("media"),
+  artwork: text("artwork"),
 });
 
-export const move = sqliteTable(
+export const move = pgTable(
   "move",
   {
     slug: text("slug").notNull().primaryKey(),
     name: text("name").notNull(),
     nameJa: text("name_ja").notNull(),
-    alternativeNames: text("alternativeNames", { mode: "json" }).$type<
-      string[]
-    >(),
-    alternativeNamesJa: text("alternativeNames_ja", { mode: "json" }).$type<
-      string[]
-    >(),
+    alternativeNames: jsonb("alternativeNames"),
+    alternativeNamesJa: jsonb("alternativeNames_ja"),
     description: text("description"),
     descriptionJa: text("description_ja"),
     abbreviation: text("abbreviation"),
     abbreviationJa: text("abbreviation_ja"),
     type: text("type").notNull(),
-    damage: int("damage"),
-    hitCount: int("hitCount"),
+    damage: integer("damage"),
+    hitCount: integer("hitCount"),
     blockType: text("blockType"),
     level: text("level"),
     input: text("input").notNull(),
     cancel: text("cancel"),
-    cancelsInto: text("cancelsInto", { mode: "json" }).$type<string[]>(),
+    cancelsInto: jsonb("cancelsInto"),
     frameAdvantage: text("frameAdvantage"),
-    properties: text("properties", { mode: "json" }).$type<string[]>(),
-    notes: text("notes", { mode: "json" }).$type<string[]>(),
-    notesJa: text("notes_ja", { mode: "json" }).$type<string[]>(),
-    characterId: int("characterId").references(() => character.id),
-    parents: text("parents", { mode: "json" }).$type<string[]>(),
-    relatedMoves: text("relatedMoves", { mode: "json" }).$type<string[]>(),
-    startup: int("startup"),
+    properties: jsonb("properties"),
+    notes: jsonb("notes"),
+    notesJa: jsonb("notes_ja"),
+    characterId: integer("characterId").references(() => character.id),
+    parents: jsonb("parents"),
+    relatedMoves: jsonb("relatedMoves"),
+    startup: integer("startup"),
     active: text("active"),
-    recovery: int("recovery"),
-    postLandingRecovery: int("postLandingRecovery"),
-    superArt: int("superArt"),
-    totalFrames: int("totalFrames"),
+    recovery: integer("recovery"),
+    postLandingRecovery: integer("postLandingRecovery"),
+    superArt: integer("superArt"),
+    totalFrames: integer("totalFrames"),
     scaling: text("scaling"),
     scalingJa: text("scaling_ja"),
     driveGauge: text("driveGauge"),
-    capcomID: int("capcomID"),
+    capcomID: integer("capcomID"),
   },
-  (move) => {
-    return {
-      characterIdx: index("move_character_idx").on(move.characterId),
-      slugIdx: index("move_slug_idx").on(move.slug),
-    };
-  },
+  (move) => [
+    index("move_character_idx").on(move.characterId),
+    index("move_slug_idx").on(move.slug),
+  ],
 );
 
-export const combo = sqliteTable(
+export const combo = pgTable(
   "combo",
   {
     id: text("id").notNull().primaryKey(),
     notes: text("notes"),
-    tags: text("tags", { mode: "json" }).$type<string[]>(),
-    media: text("media", { mode: "json" }).$type<string[]>(),
+    tags: jsonb("tags"),
+    media: jsonb("media"),
     gameVersion: text("gameVersion").notNull(),
-    opponentCharacterId: int("opponentCharacterId"),
+    opponentCharacterId: integer("opponentCharacterId"),
     modifiers: text("modifiers"),
     opponentModifiers: text("opponentModifiers"),
-    damage: int("damage"),
-    hitCount: int("hitCount"),
+    damage: integer("damage"),
+    hitCount: integer("hitCount"),
     sequence: text("sequence").notNull(),
     moveSlugs: text("moveSlugs").notNull(),
     createdAt: text("createdAt").notNull(),
     updatedAt: text("updatedAt").notNull(),
-    characterId: int("characterId")
+    characterId: integer("characterId")
       .notNull()
       .references(() => character.id),
     deviceId: text("deviceId"),
     shortId: text("shortId").unique().notNull(),
   },
-  (combo) => {
-    return {
-      characterIdx: index("character_id_idx").on(combo.characterId),
-      deviceIdx: index("device_id_idx").on(combo.deviceId),
-      idDeviceIdIdx: uniqueIndex("device_short_id_idx").on(
-        combo.shortId,
-        combo.deviceId,
-      ),
-    };
-  },
+  (combo) => [
+    index("character_id_idx").on(combo.characterId),
+    index("device_id_idx").on(combo.deviceId),
+    uniqueIndex("device_short_id_idx").on(combo.shortId, combo.deviceId),
+  ],
 );
 
-export const list = sqliteTable("list", {
+export const list = pgTable("list", {
   id: text("id").notNull().primaryKey(),
   name: text("name").notNull(),
   description: text("description"),
   comboIds: text("comboIds").notNull(),
   deviceId: text("deviceId"),
-  characterId: int("characterId").references(() => character.id),
+  characterId: integer("characterId").references(() => character.id),
   createdAt: text("createdAt"),
   updatedAt: text("updatedAt"),
 });
