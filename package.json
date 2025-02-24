@@ -8,8 +8,8 @@
     "preview": "vinxi preview",
     "migrations:gen": "drizzle-kit generate --config drizzle-prod.config.ts",
     "migrations:gen:dev": "drizzle-kit generate --config drizzle-dev.config.ts",
-    "migrations:up": "drizzle-kit up --config drizzle-prod.config.ts",
-    "migrations:up:dev": "drizzle-kit up --config drizzle-dev.config.ts",
+    "migrations:push": "drizzle-kit push --config drizzle-prod.config.ts",
+    "migrations:push:dev": "drizzle-kit migrate --config drizzle-dev.config.ts",
     "drizzle-studio": "drizzle-kit studio --config drizzle-prod.config.ts",
     "drizzle-studio:dev": "drizzle-kit studio --config drizzle-dev.config.ts"
   },
