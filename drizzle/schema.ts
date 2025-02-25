@@ -7,19 +7,27 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-export const character = pgTable("character", {
-  id: integer("id").notNull().primaryKey(),
+export const game = pgTable("game", {
+  id: text("id").notNull().primaryKey(),
   name: text("name").notNull(),
   nameJa: text("name_ja").notNull(),
   slug: text("slug").notNull(),
-  capcom_slug: text("capcom_slug"),
-  description: text("description"),
-  descriptionJa: text("description_ja"),
-  tags: jsonb("tags"),
-  tagsJa: jsonb("tags_ja"),
-  media: jsonb("media"),
-  artwork: text("artwork"),
+  gameflintId: text("gameflint_id"),
 });
+
+export const character = pgTable(
+  "character",
+  {
+    id: integer("id").notNull().primaryKey(),
+    name: text("name").notNull(),
+    nameJa: text("name_ja").notNull(),
+    slug: text("slug").notNull(),
+    media: jsonb("media"),
+    artwork: text("artwork"),
+    gameId: text("game_id").references(() => game.id),
+  },
+  (character) => [index("character_game_idx").on(character.gameId)],
+);
 
 export const move = pgTable(
   "move",
@@ -27,37 +35,8 @@ export const move = pgTable(
     slug: text("slug").notNull().primaryKey(),
     name: text("name").notNull(),
     nameJa: text("name_ja").notNull(),
-    alternativeNames: jsonb("alternativeNames"),
-    alternativeNamesJa: jsonb("alternativeNames_ja"),
-    description: text("description"),
-    descriptionJa: text("description_ja"),
-    abbreviation: text("abbreviation"),
-    abbreviationJa: text("abbreviation_ja"),
-    type: text("type").notNull(),
-    damage: integer("damage"),
-    hitCount: integer("hitCount"),
-    blockType: text("blockType"),
-    level: text("level"),
     input: text("input").notNull(),
-    cancel: text("cancel"),
-    cancelsInto: jsonb("cancelsInto"),
-    frameAdvantage: text("frameAdvantage"),
-    properties: jsonb("properties"),
-    notes: jsonb("notes"),
-    notesJa: jsonb("notes_ja"),
-    characterId: integer("characterId").references(() => character.id),
-    parents: jsonb("parents"),
-    relatedMoves: jsonb("relatedMoves"),
-    startup: integer("startup"),
-    active: text("active"),
-    recovery: integer("recovery"),
-    postLandingRecovery: integer("postLandingRecovery"),
-    superArt: integer("superArt"),
-    totalFrames: integer("totalFrames"),
-    scaling: text("scaling"),
-    scalingJa: text("scaling_ja"),
-    driveGauge: text("driveGauge"),
-    capcomID: integer("capcomID"),
+    characterId: integer("character_id").references(() => character.id),
   },
   (move) => [
     index("move_character_idx").on(move.characterId),
@@ -70,28 +49,22 @@ export const combo = pgTable(
   {
     id: text("id").notNull().primaryKey(),
     notes: text("notes"),
-    tags: jsonb("tags"),
-    media: jsonb("media"),
     gameVersion: text("gameVersion").notNull(),
-    opponentCharacterId: integer("opponentCharacterId"),
-    modifiers: text("modifiers"),
-    opponentModifiers: text("opponentModifiers"),
     damage: integer("damage"),
     hitCount: integer("hitCount"),
     sequence: text("sequence").notNull(),
-    moveSlugs: text("moveSlugs").notNull(),
+    moveSlugs: text("moveSlugs"),
     createdAt: text("createdAt").notNull(),
     updatedAt: text("updatedAt").notNull(),
     characterId: integer("characterId")
       .notNull()
       .references(() => character.id),
-    deviceId: text("deviceId"),
     shortId: text("shortId").unique().notNull(),
+    // TODO: add userId
   },
   (combo) => [
     index("character_id_idx").on(combo.characterId),
-    index("device_id_idx").on(combo.deviceId),
-    uniqueIndex("device_short_id_idx").on(combo.shortId, combo.deviceId),
+    uniqueIndex("short_id_idx").on(combo.shortId),
   ],
 );
 
@@ -100,8 +73,8 @@ export const list = pgTable("list", {
   name: text("name").notNull(),
   description: text("description"),
   comboIds: text("comboIds").notNull(),
-  deviceId: text("deviceId"),
   characterId: integer("characterId").references(() => character.id),
   createdAt: text("createdAt"),
   updatedAt: text("updatedAt"),
+  // TODO: add userId
 });

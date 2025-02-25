@@ -4,7 +4,7 @@ export default {
   dialect: "postgresql",
   driver: "pglite",
   schema: "./drizzle/schema.ts",
-  out: "./drizzle",
+  out: "./drizzle/migrations/dev",
   dbCredentials: {
     url: "./drizzle/pgdata",
   },

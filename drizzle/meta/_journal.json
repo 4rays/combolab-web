@@ -1,13 +1,5 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "7",
-      "when": 1740312949345,
-      "tag": "0000_true_amphibian",
-      "breakpoints": true
-    }
-  ]
+  "entries": []
 }
