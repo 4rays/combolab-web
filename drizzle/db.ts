@@ -4,7 +4,9 @@ import {drizzle as drizzlePglite} from "drizzle-orm/pglite";
 import {neon} from "@neondatabase/serverless";
 
 let databaseUrl = import.meta.env.DATABASE_URL;
-let db;
+let db:
+  | Awaited<ReturnType<typeof drizzleNeon>>
+  | Awaited<ReturnType<typeof drizzlePglite>>;
 
 if (databaseUrl.includes("localhost")) {
   db = drizzlePglite("./drizzle/pgdata");
