@@ -6,12 +6,15 @@
     "dev": "vinxi dev",
     "build": "vinxi build",
     "preview": "vinxi preview",
-    "migrations:gen": "drizzle-kit generate --config drizzle-prod.config.ts",
-    "migrations:gen:dev": "drizzle-kit generate --config drizzle-dev.config.ts",
-    "migrations:push": "drizzle-kit push --config drizzle-prod.config.ts",
-    "migrations:push:dev": "drizzle-kit migrate --config drizzle-dev.config.ts",
-    "drizzle-studio": "drizzle-kit studio --config drizzle-prod.config.ts",
-    "drizzle-studio:dev": "drizzle-kit studio --config drizzle-dev.config.ts"
+    "db": "drizzle-kit",
+    "db:create:dev": "bun run migrations:apply:dev",
+    "db:teardown:dev": "bun db drop --config drizzle-dev.config.ts",
+    "db:migrations:create:prod": "bun db generate --config drizzle-prod.config.ts",
+    "db:migrations:create:dev": "bun db generate --config drizzle-dev.config.ts",
+    "db:migrations:apply:prod": "bun db push --config drizzle-prod.config.ts",
+    "db:migrations:apply:dev": "bun db migrate --config drizzle-dev.config.ts",
+    "db:view:prod": "bun db studio --config drizzle-prod.config.ts",
+    "db:view:dev": "bun db studio --config drizzle-dev.config.ts"
   },
   "devDependencies": {
     "@types/bun": "latest",

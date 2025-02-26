@@ -65,9 +65,9 @@ export const combo = pgTable(
     userId: text("userId").references(() => user.id),
   },
   (combo) => [
-    index("character_id_idx").on(combo.characterId),
-    uniqueIndex("short_id_idx").on(combo.shortId),
-    index("user_id_idx").on(combo.userId),
+    index("combo_character_id_idx").on(combo.characterId),
+    uniqueIndex("combo_short_id_idx").on(combo.shortId),
+    index("combo_user_id_idx").on(combo.userId),
   ],
 );
 
@@ -84,8 +84,8 @@ export const list = pgTable(
     userId: text("userId").references(() => user.id),
   },
   (list) => [
-    index("character_id_idx").on(list.characterId),
-    index("user_id_idx").on(list.userId),
+    index("list_character_id_idx").on(list.characterId),
+    index("list_user_id_idx").on(list.userId),
   ],
 );
 
