@@ -1,4 +1,3 @@
-// app/ssr.tsx
 import {createStartHandler, defaultStreamHandler} from "@tanstack/start/server";
 import {getRouterManifest} from "@tanstack/start/router-manifest";
 

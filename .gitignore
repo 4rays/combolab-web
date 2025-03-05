@@ -177,3 +177,5 @@ dist
 /sql
 .dev.vars
 pgdata
+.netlify
+.vinxi

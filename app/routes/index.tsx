@@ -7,5 +7,5 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  return <div>Hello World</div>;
+  return <div>Combolab Landing Page</div>;
 }

@@ -3,7 +3,8 @@ import {drizzle as drizzleNeon} from "drizzle-orm/neon-http";
 import {drizzle as drizzlePglite} from "drizzle-orm/pglite";
 import {neon} from "@neondatabase/serverless";
 
-let databaseUrl = import.meta.env.DATABASE_URL;
+let databaseUrl = import.meta.env.DATABASE_URL!;
+
 let db:
   | Awaited<ReturnType<typeof drizzleNeon>>
   | Awaited<ReturnType<typeof drizzlePglite>>;
