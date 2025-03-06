@@ -5,7 +5,7 @@ import {routeTree} from "./routeTree.gen";
 import {QueryClient} from "@tanstack/react-query";
 import {lazy} from "react";
 import {DefaultCatchBoundary} from "@/components/DefaultCatchBoundary";
-
+import {NotFound} from "@/components/NotFound";
 export interface RouterContext {
   queryClient: QueryClient;
 }
@@ -26,7 +26,7 @@ export function createRouter() {
     context: {queryClient},
     // defaultPreload: "intent",
     defaultErrorComponent: DefaultCatchBoundary,
-    // defaultNotFoundComponent: NotFound,
+    defaultNotFoundComponent: NotFound,
   });
 
   if (typeof window !== "undefined") {
