@@ -5,6 +5,8 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import {TanStackRouterDevtools} from "@tanstack/router-devtools";
+import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -28,6 +30,8 @@ function RootComponent() {
   return (
     <RootDocument>
       <Outlet />
+      <TanStackRouterDevtools />
+      <ReactQueryDevtools initialIsOpen={false} />
     </RootDocument>
   );
 }

@@ -6,7 +6,7 @@ import {
   useMatch,
   useRouter,
 } from "@tanstack/react-router";
-import {Button} from "./ui/button";
+import {Button} from "./interface/button";
 
 export function DefaultCatchBoundary({error}: Readonly<ErrorComponentProps>) {
   const router = useRouter();

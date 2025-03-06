@@ -4,6 +4,7 @@ import {routerWithQueryClient} from "@tanstack/react-router-with-query";
 import {routeTree} from "./routeTree.gen";
 import {QueryClient} from "@tanstack/react-query";
 import {lazy} from "react";
+import {DefaultCatchBoundary} from "@/components/DefaultCatchBoundary";
 
 export interface RouterContext {
   queryClient: QueryClient;
@@ -24,7 +25,7 @@ export function createRouter() {
     scrollRestoration: true,
     context: {queryClient},
     // defaultPreload: "intent",
-    // defaultErrorComponent: DefaultCatchBoundary,
+    defaultErrorComponent: DefaultCatchBoundary,
     // defaultNotFoundComponent: NotFound,
   });
 
@@ -52,8 +53,8 @@ declare global {
 export const RouterDevtools = import.meta.env.PROD
   ? () => null
   : lazy(() =>
-      import("@tanstack/react-router-devtools").then((mod) => ({
-        default: mod.TanStackRouterDevtools,
+      import("@tanstack/router-devtools").then((res) => ({
+        default: res.TanStackRouterDevtools,
       })),
     );
 
