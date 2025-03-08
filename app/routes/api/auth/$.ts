@@ -1,4 +1,4 @@
-import {auth} from "@/lib/helpers/auth";
+import {auth} from "@/lib/helpers/better-auth";
 import {createAPIFileRoute} from "@tanstack/react-start/api";
 
 export const APIRoute = createAPIFileRoute("/api/auth/$")({
