@@ -8,7 +8,7 @@
     "preview": "vinxi preview",
     "ui:add": "bunx --bun shadcn@canary add",
     "db": "drizzle-kit",
-    "db:create:dev": "bun run migrations:apply:dev",
+    "db:create:dev": "bun run db:migrations:apply:dev",
     "db:teardown:dev": "bun db drop --config drizzle-dev.config.ts",
     "db:migrations:create:prod": "bun db generate --config drizzle-prod.config.ts",
     "db:migrations:create:dev": "bun db generate --config drizzle-dev.config.ts",

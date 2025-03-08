@@ -8,12 +8,6 @@ To install dependencies:
 bun install
 ```
 
-To generate types:
-
-```bash
-bun run typegen
-```
-
 ## Development
 
 To run:
