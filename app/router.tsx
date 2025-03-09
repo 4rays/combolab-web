@@ -6,6 +6,7 @@ import {QueryClient} from "@tanstack/react-query";
 import {lazy} from "react";
 import {DefaultCatchBoundary} from "@/components/DefaultCatchBoundary";
 import {NotFound} from "@/components/NotFound";
+
 export interface RouterContext {
   queryClient: QueryClient;
 }

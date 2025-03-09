@@ -29,3 +29,5 @@ export const auth = betterAuth({
   // Uncomment below line to enable Redis for caching sessions and ratelimiting
   // secondaryStorage: redisSecondaryStorage
 });
+
+export type Session = typeof auth.$Infer.Session;
